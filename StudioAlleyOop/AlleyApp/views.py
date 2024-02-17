@@ -1,49 +1,31 @@
 from django.shortcuts import render
-from AlleyApp import models
+from AlleyApp import models, forms
 # Create your views here.
 
-
-
-
-
-from django.shortcuts import render
-#from AppCoder import forms, models
-
 def inicio(request):
-    return render(request, 'AppCoder/inicio.html')
+    return render(request, 'AlleyApp/inicio.html')
 
-
-def cursos(request):
+def Servicios(request):
     if request.method == 'POST':
-        formulario = forms.Form_Curso(request.POST)
+        formulario = forms.Form_Servicios(request.POST)
         if formulario.is_valid():
             informacion = formulario.cleaned_data
-            curso = models.Curso(nombre=informacion["curso"], camada=informacion["camada"])
-            curso.save()
-            return render(request, 'AppCoder/cursos.html')
+            servicio = models.Servicios(nombre=informacion["nombre"], descripcion=informacion["descripcion"])
+            servicio.save()
+            return render(request, 'AlleyApp/servicios.html')
     else:
-        formulario = forms.Form_Curso()
+        formulario = forms.Form_Servicios()
         contexto = {"formulario": formulario}
-        return render(request, "AppCoder/cursos.html", contexto)
-    
+        return render(request, "AlleyApp/servicios.html", contexto)
+      
+def Profesionales(request):
+    return render(request, 'AlleyApp/profesionales.html')    
 
-def profesores(request):
-    return render(request, 'AppCoder/profesores.html')
-
-
-def estudiantes(request):
-    return render(request, 'AppCoder/estudiantes.html')
-
-
-def entregables(request):
-    return render(request, 'AppCoder/entregables.html')
-
-def buscar(request):
-  if request.GET['camada']:
-    camada = request.GET['camada']
-    cursos = models.Curso.objects.filter(camada__icontains=camada)
-    return render(request, 'AppCoder/inicio.html', {'cursos': cursos, 'camada': camada})
-  else:
-    respuesta = 'No enviaste datos'
+def Proyectos(request):
+    return render(request, 'AlleyApp/proyectos.html') 
   
-  return render(request, 'AppCoder/inicio.html', {'respuesta': respuesta})
+def Compañias(request):
+    return render(request, 'AlleyApp/compañias.html') 
+
+def Buscar(request):
+    return render(request, 'AlleyApp/inicio.html')  

@@ -2,7 +2,7 @@ from django.urls import path
 from AlleyApp import views
 
 urlpatterns = [
-    path('', views.inicio, name="Inicio"),
+    path('', views.Inicio, name="Inicio"),
     path('buscar', views.Buscar, name="Buscar"),
     path('servicios', views.Servicios, name="Servicios"),
     path('profesionales', views.Profesionales, name="Profesionales"),

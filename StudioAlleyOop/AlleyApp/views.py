@@ -2,8 +2,8 @@ from django.shortcuts import render
 from AlleyApp import models, forms
 # Create your views here.
 
-def inicio(request):
-    return render(request, 'V:\Virgi\Repos Entregas\TuPrimeraPaginaRodriguez\StudioAlleyOop\AlleyApp\templates\AlleyApp\inicio.html')
+def Inicio(request):
+    return render(request, 'AlleyApp\Inicio.html')
 
 def Servicios(request):
     if request.method == 'POST':
@@ -12,11 +12,11 @@ def Servicios(request):
             informacion = formulario.cleaned_data
             servicio = models.Servicios(nombre=informacion["nombre"], descripcion=informacion["descripcion"])
             servicio.save()
-            return render(request, 'AlleyApp/servicios.html')
+            return render(request, 'AlleyApp/Servicios.html')
     else:
         formulario = forms.Form_Servicios()
         contexto = {"formulario": formulario}
-        return render(request, "AlleyApp/servicios.html", contexto)
+        return render(request, "AlleyApp/Servicios.html", contexto)
       
 def Profesionales(request):
     if request.method == 'POST':
@@ -25,12 +25,12 @@ def Profesionales(request):
             informacion = formulario.cleaned_data
             profesional = models.Profesionales(nombre=informacion["nombre"], titulo=informacion["titulo"], email=informacion["email"])
             profesional.save()
-            return render(request, 'AlleyApp/profesionales.html')
+            return render(request, 'AlleyApp/Profesionales.html')
     else:
         formulario = forms.Form_Profesionales()
         contexto = {"formulario": formulario}
-        return render(request, "AlleyApp/profesionales.html", contexto)
-    return render(request, 'AlleyApp/profesionales.html')    
+        return render(request, "AlleyApp/Profesionales.html", contexto)
+    return render(request, 'AlleyApp/Profesionales.html')    
 
 def Proyectos(request):
     if request.method == 'POST':
@@ -40,12 +40,12 @@ def Proyectos(request):
             proyecto = models.Proyectos(nombre=informacion["nombre"], inicio=informacion["inicio"], finalizacion=["finalizacion"],
                                         actualidad=informacion["actualidad"], url_proyecto=informacion["url_proyecto"])
             proyecto.save()
-            return render(request, 'AlleyApp/proyectos.html')
+            return render(request, 'AlleyApp/Proyectos.html')
     else:
         formulario = forms.Form_Proyectos()
         contexto = {"formulario": formulario}
-        return render(request, "AlleyApp/proyectos.html", contexto)
-    return render(request, 'AlleyApp/proyectos.html') 
+        return render(request, "AlleyApp/Proyectos.html", contexto)
+    return render(request, 'AlleyApp/Proyectos.html') 
   
 def Compañias(request):
     if request.method == 'POST':
@@ -55,19 +55,19 @@ def Compañias(request):
             compañia = models.Compañías(nombre=informacion["nombre"], inicio=informacion["inicio"], fin=informacion["fin"],
                                         actualidad=informacion["actualidad"])
             compañia.save()
-            return render(request, 'AlleyApp/compañias.html')
+            return render(request, 'AlleyApp/Compañias.html')
     else:
         formulario = forms.Form_Compañías()
         contexto = {"formulario": formulario}
-        return render(request, "AlleyApp/compañias.html", contexto)
-    return render(request, 'AlleyApp/compañias.html')  
+        return render(request, "AlleyApp/Compañias.html", contexto)
+    return render(request, 'AlleyApp/Compañias.html')  
 
 def Buscar(request):
   if request.GET['nombre']:
     nombre = request.GET['nombre']
     Compañias = models.Compañias.objects.filter(compañia__icontains=nombre)
-    return render(request, 'AppCoder/inicio.html', {'nombre': nombre})
+    return render(request, 'AppCoder/Inicio.html', {'nombre': nombre})
   else:
     respuesta = 'No enviaste datos'
   
-  return render(request, 'AppCoder/inicio.html', {'respuesta': respuesta})
+  return render(request, 'AppCoder/Inicio.html', {'respuesta': respuesta})

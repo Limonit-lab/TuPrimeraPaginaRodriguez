@@ -3,7 +3,7 @@ from AlleyApp import models, forms
 # Create your views here.
 
 def inicio(request):
-    return render(request, 'AlleyApp/inicio.html')
+    return render(request, 'V:\Virgi\Repos Entregas\TuPrimeraPaginaRodriguez\StudioAlleyOop\AlleyApp\templates\AlleyApp\inicio.html')
 
 def Servicios(request):
     if request.method == 'POST':
@@ -19,13 +19,55 @@ def Servicios(request):
         return render(request, "AlleyApp/servicios.html", contexto)
       
 def Profesionales(request):
+    if request.method == 'POST':
+        formulario = forms.Form_Profesionales(request.POST)
+        if formulario.is_valid():
+            informacion = formulario.cleaned_data
+            profesional = models.Profesionales(nombre=informacion["nombre"], titulo=informacion["titulo"], email=informacion["email"])
+            profesional.save()
+            return render(request, 'AlleyApp/profesionales.html')
+    else:
+        formulario = forms.Form_Profesionales()
+        contexto = {"formulario": formulario}
+        return render(request, "AlleyApp/profesionales.html", contexto)
     return render(request, 'AlleyApp/profesionales.html')    
 
 def Proyectos(request):
+    if request.method == 'POST':
+        formulario = forms.Form_Proyectos(request.POST)
+        if formulario.is_valid():
+            informacion = formulario.cleaned_data
+            proyecto = models.Proyectos(nombre=informacion["nombre"], inicio=informacion["inicio"], finalizacion=["finalizacion"],
+                                        actualidad=informacion["actualidad"], url_proyecto=informacion["url_proyecto"])
+            proyecto.save()
+            return render(request, 'AlleyApp/proyectos.html')
+    else:
+        formulario = forms.Form_Proyectos()
+        contexto = {"formulario": formulario}
+        return render(request, "AlleyApp/proyectos.html", contexto)
     return render(request, 'AlleyApp/proyectos.html') 
   
 def Compañias(request):
-    return render(request, 'AlleyApp/compañias.html') 
+    if request.method == 'POST':
+        formulario = forms.Form_Compañías(request.POST)
+        if formulario.is_valid():
+            informacion = formulario.cleaned_data
+            compañia = models.Compañías(nombre=informacion["nombre"], inicio=informacion["inicio"], fin=informacion["fin"],
+                                        actualidad=informacion["actualidad"])
+            compañia.save()
+            return render(request, 'AlleyApp/compañias.html')
+    else:
+        formulario = forms.Form_Compañías()
+        contexto = {"formulario": formulario}
+        return render(request, "AlleyApp/compañias.html", contexto)
+    return render(request, 'AlleyApp/compañias.html')  
 
 def Buscar(request):
-    return render(request, 'AlleyApp/inicio.html')  
+  if request.GET['nombre']:
+    nombre = request.GET['nombre']
+    Compañias = models.Compañias.objects.filter(compañia__icontains=nombre)
+    return render(request, 'AppCoder/inicio.html', {'nombre': nombre})
+  else:
+    respuesta = 'No enviaste datos'
+  
+  return render(request, 'AppCoder/inicio.html', {'respuesta': respuesta})
